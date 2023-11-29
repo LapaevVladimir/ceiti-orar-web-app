@@ -1,6 +1,6 @@
 "use client";
 import React, {useContext, useEffect, useState} from 'react';
-import {getSchedule} from "@/api-ceiti-get/api-ceiti-get";
+import {getSchedule, ScheduleInterface} from "@/api-ceiti-get/api-ceiti-get";
 import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
 import ScheduleDay from "@/app/(main)/(routes)/orar/_components/schedule-day";
 import ScheduleNavbar from "@/app/(main)/(routes)/orar/_components/schedule-navbar";
@@ -15,7 +15,7 @@ const Schedule = () => {
 
     const {currentType, currentId} = context;
 
-    const [result, setResult] = useState("");
+    const [result, setResult] = useState<ScheduleInterface>({data:{}, periods:[]});
 
     const fetchData = async () => {
         try {
@@ -36,14 +36,17 @@ const Schedule = () => {
         setLoading(true);
     }, [currentType, currentId]);
 
+    const {periods, data} = result;
+
     return (
         <div className="w-full h-full p-4">
-            <ScheduleNavbar/>
-            <ScheduleDay day="Monday"/>
-            <ScheduleDay day="Tuesday"/>
-            <ScheduleDay day="Wednesday"/>
-            <ScheduleDay day="Thursday"/>
-            <ScheduleDay day="Friday"/>
+            <ScheduleNavbar periods={periods}/>
+            {Object.entries(data).map((value) =>(
+                <ScheduleDay
+                    day={value[0].charAt(0).toUpperCase() + value[0].slice(1)}
+                    data={value[1]}
+                />
+            ))}
         </div>
     );
 };

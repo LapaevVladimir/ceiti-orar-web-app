@@ -19,6 +19,15 @@ export interface Teacher {
     name: string;
 }
 
+export interface ScheduleInterface {
+    data: {
+
+    }
+    periods: [
+
+    ]
+}
+
 const urlGroups = 'https://orar-api.ceiti.md/v1/grupe';
 const urlTeachers = 'https://orar-api.ceiti.md/v1/profesori';
 const urlSchedule = 'https://orar-api.ceiti.md/v1/orar';
@@ -52,14 +61,14 @@ export const getTeachers = async (): Promise<Group[]> => {
     }
 };
 
-export const getSchedule = async (id:string, type:string): Promise<string> => {
+export const getSchedule = async (id:string, type:string): Promise<ScheduleInterface> => {
     try {
         if(id === "" || type === "")
-            return "";
+            return {data:{}, periods:[]};
         const response = await axios.get(urlSchedule + `?_id=${id}&tip=${type}`);
-        return JSON.stringify(response.data);
+        return response.data;
     } catch (error) {
         console.error(error);
-        return '';
+        return {data:{}, periods:[]};
     }
 }
