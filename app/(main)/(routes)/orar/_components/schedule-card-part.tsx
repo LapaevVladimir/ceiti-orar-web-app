@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Separator} from "@/components/ui/separator";
 import {Badge} from "@/components/ui/badge";
+import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
 
 interface CardProps{
     data: any,
@@ -9,6 +10,16 @@ interface CardProps{
 const ScheduleCardPart = ({
     data,
 }:CardProps) => {
+    const context = useContext(ScheduleContext);
+
+    if (!context) {
+        return null;
+    }
+
+    const {currentType} = context;
+
+    const isTeacher = currentType === "teacher";
+
     const isGroup: boolean = data && data.length !== 0 && data[0]["groupids"] && data[0]["groupids"]["divisiontag"] === "1"
         ? data[0]["groupids"]["divisiontag"]
         : "";
@@ -17,8 +28,20 @@ const ScheduleCardPart = ({
         ? data[0]["subjectid"]["name"].toString()
         : "";
 
-    const name: string = data && data.length !== 0 && data[0]["teacherids"] && data[0]["teacherids"]["name"]
-        ? data[0]["teacherids"]["name"].toString()
+    let name: string;
+
+    if(!isTeacher) {
+        name = data && data.length !== 0 && data[0]["teacherids"] && data[0]["teacherids"]["name"]
+            ? data[0]["teacherids"]["name"].toString()
+            : "";
+    }else{
+        name = data && data.length !== 0 && data[0]["classids"] && data[0]["classids"]["name"]
+            ? data[0]["classids"]["name"].toString()
+            : "";
+    }
+
+    const groupId: string = data && data.length !== 0 && data[0]["groupids"] && data[0]["groupids"]["name"]
+        ? data[0]["groupids"]["name"].slice(-1)
         : "";
 
     const classroom: string = data && data.length !== 0 && data[0]["classroomids"] && data[0]["classroomids"]["name"]
@@ -47,9 +70,13 @@ const ScheduleCardPart = ({
                     <Badge className="ml-2">{classroom}</Badge>
                 </div>
                 <div className="flex justify-center mt-2">
-                    {isGroup && (
+                    {isGroup && !isTeacher && (
                         <Badge className="ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
                         hover:bg-blue-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">Group 1</Badge>
+                    )}
+                    {isTeacher && groupId !== "�" && (
+                        <Badge className="ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
+                        hover:bg-blue-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">Group {groupId}</Badge>
                     )}
                     <Badge className="ml-2 bg-green-500 opacity-80 dark:bg-opacity-20 text-green-950 dark:text-green-200
                         hover:bg-green-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">{name}</Badge>
