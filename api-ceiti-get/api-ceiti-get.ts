@@ -14,11 +14,19 @@ export interface Group {
     name: string;
 }
 
-const url = 'https://orar-api.ceiti.md/v1/grupe';
+export interface Teacher {
+    id: string;
+    name: string;
+}
+
+const urlGroups = 'https://orar-api.ceiti.md/v1/grupe';
+const urlTeachers = 'https://orar-api.ceiti.md/v1/profesori';
+const urlSchedule = 'https://orar-api.ceiti.md/v1/orar';
+
 
 export const getGroups = async (): Promise<Group[]> => {
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(urlGroups);
         const groups = response.data.map((group: GroupGet) => ({
             id: group._id,
             name: group.name
@@ -29,3 +37,29 @@ export const getGroups = async (): Promise<Group[]> => {
         return [];
     }
 };
+
+export const getTeachers = async (): Promise<Group[]> => {
+    try {
+        const response = await axios.get(urlTeachers);
+        const teachers = response.data.map((teacher: {_id: string, name: string}) => ({
+            id: teacher._id,
+            name: teacher.name
+        }));
+        return teachers;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+
+export const getSchedule = async (id:string, type:string): Promise<string> => {
+    try {
+        if(id === "" || type === "")
+            return "";
+        const response = await axios.get(urlSchedule + `?_id=${id}&tip=${type}`);
+        return JSON.stringify(response.data);
+    } catch (error) {
+        console.error(error);
+        return '';
+    }
+}
