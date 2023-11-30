@@ -49,6 +49,7 @@ const Schedule = () => {
                     day={value[0].charAt(0).toUpperCase() + value[0].slice(1)}
                     data={value[1]}
                     periods={periods}
+                    key={value[0]}
                 />
             ))}
             <div className="fixed right-0 bottom-0 h-[40px] mb-8 mr-8 flex flex-row max-sm:mb-4 max-sm:mr-4">

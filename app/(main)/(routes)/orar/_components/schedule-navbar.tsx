@@ -17,6 +17,7 @@ const ScheduleNavbar = ({
                         numberPair={index + 1}
                         startPair={element["starttime"]}
                         endPair={element["endtime"]}
+                        key={index}
                     />
                 ))
             :(
