@@ -38,14 +38,6 @@ export function TeacherSelect() {
 
     const {setCurrentId} = context;
 
-    const setDefaultId = () => {
-        setId(teachersList?.[0]?.id);
-    }
-
-    const setDefaultValue = () => {
-        setValue(teachersList?.[0]?.name.toLowerCase());
-    }
-
     const fetchData = async () => {
         try {
             const groups = await getTeachers();
@@ -61,13 +53,15 @@ export function TeacherSelect() {
     }, []);
 
     useEffect(() => {
-        setDefaultValue();
-        setDefaultId();
-    }, [loading]);
+        if (!loading && teachersList.length > 0) {
+            setId(teachersList[0].id);
+            setValue(teachersList[0].name.toLowerCase());
+        }
+    }, [loading, teachersList]);
 
     useEffect(() => {
         setCurrentId(id);
-    }, [id]);
+    }, [id, setCurrentId]);
 
     return (
         loading
