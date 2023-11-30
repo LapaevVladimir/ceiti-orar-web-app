@@ -61,13 +61,13 @@ export function TeacherSelect() {
     }, []);
 
     useEffect(() => {
-        setCurrentId(id);
-    }, [id]);
-
-    useEffect(() => {
         setDefaultValue();
         setDefaultId();
     }, [loading]);
+
+    useEffect(() => {
+        setCurrentId(id);
+    }, [id]);
 
     return (
         loading
