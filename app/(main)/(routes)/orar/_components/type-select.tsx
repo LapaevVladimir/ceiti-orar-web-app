@@ -41,16 +41,12 @@ export function TypeSelect({
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("group")
 
-    const context = useContext(ScheduleContext);
-
-    if (!context) {
-        return null;
-    }
-
-    const {setCurrentType} = context;
+    const setCurrentType = useContext(ScheduleContext)?.setCurrentType;
 
     useEffect(() => {
+        if (setCurrentType) {
             setCurrentType(value === "group" ? "class" : "teacher");
+        }
     }, []);
 
     return (
@@ -77,7 +73,9 @@ export function TypeSelect({
                                     setValue(currentValue)
                                     setOpen(false)
                                     setType(currentValue)
-                                    setCurrentType(currentValue === "teacher" ? "teacher" : "class")
+                                    if (setCurrentType) {
+                                        setCurrentType(currentValue === "teacher" ? "teacher" : "class")
+                                    }
                                 }}
                             >
                                 <Check

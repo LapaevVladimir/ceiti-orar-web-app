@@ -31,13 +31,7 @@ export function GroupSelect() {
 
     const [groupsList, setGroupList] = useState<Group[]>([]);
 
-    const context = useContext(ScheduleContext);
-
-    if (!context) {
-        return null;
-    }
-
-    const {setCurrentId} = context;
+    const setCurrentId =  useContext(ScheduleContext)?.setCurrentId;
 
     const setDefaultValue = () => {
         setValue(groupsList?.[0]?.name.toUpperCase());
@@ -67,7 +61,9 @@ export function GroupSelect() {
     }, [loading]);
 
     useEffect(() => {
-        setCurrentId(id);
+        if (setCurrentId) {
+            setCurrentId(id);
+        }
     }, [id]);
 
     return (
