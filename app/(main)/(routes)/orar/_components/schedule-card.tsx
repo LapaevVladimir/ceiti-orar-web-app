@@ -1,5 +1,4 @@
 import React from 'react';
-import {cn} from "@/lib/utils";
 import ScheduleCardPart from "@/app/(main)/(routes)/orar/_components/schedule-card-part";
 import {Separator} from "@/components/ui/separator";
 
@@ -11,7 +10,7 @@ const ScheduleCard = ({
     data,
 }:CardProps) => {
     return (
-        <div className="w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl">
+        <div className="max-sm:w-[300px] sm:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl">
             {(data["impar"]?.length > 0 || data["par"]?.length > 0)  &&(
                 <div className="h-full">
                     <div className="h-1/2">
