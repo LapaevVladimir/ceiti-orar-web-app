@@ -16,11 +16,9 @@ const Schedule = () => {
 
     const fetchData = async () => {
         try {
-            if (currentId != null && currentType != null) {
-                const result = await getSchedule(currentId, currentType);
-                setResult(result);
-                setLoading(false);
-            }
+            const result = await getSchedule(currentId ? currentId : "", currentType ? currentType : "");
+            setResult(result);
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching groups:", error);
         }

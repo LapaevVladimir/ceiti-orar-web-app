@@ -23,16 +23,14 @@ const ScheduleDay = ({
                 <ScrollArea className="w-screen whitespace-nowrap">
                     <div className="flex w-max space-x-4 p-4">
                         {Object.entries(data).slice(0, 5).map((value, index) => (
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col justify-center items-center" key={index}>
                                 <ScheduleTimeCard
                                     numberPair={index + 1}
                                     startPair={periods[index]["starttime"]}
                                     endPair={periods[index]["endtime"]}
-                                    key={index}
                                 />
                                 <ScheduleCard
                                     data={value[1]}
-                                    key={index+10}
                                 />
                             </div>
                         ))}
