@@ -30,13 +30,15 @@ export function TeacherSelect() {
 
     const [teachersList, setTeachersList] = useState<Teacher[]>([]);
 
-    const context = useContext(ScheduleContext);
+    const setCurrentId = useContext(ScheduleContext)?.setCurrentId;
 
-    if (!context) {
-        return null;
+    const setDefaultId = () => {
+        setId(teachersList?.[0]?.id);
     }
 
-    const {setCurrentId} = context;
+    const setDefaultValue = () => {
+        setValue(teachersList?.[0]?.name.toLowerCase());
+    }
 
     const fetchData = async () => {
         try {
@@ -53,15 +55,15 @@ export function TeacherSelect() {
     }, []);
 
     useEffect(() => {
-        if (!loading && teachersList.length > 0) {
-            setId(teachersList[0].id);
-            setValue(teachersList[0].name.toLowerCase());
-        }
-    }, [loading, teachersList]);
+        setDefaultValue();
+        setDefaultId();
+    }, [loading]);
 
     useEffect(() => {
-        setCurrentId(id);
-    }, [id, setCurrentId]);
+        if (setCurrentId) {
+            setCurrentId(id);
+        }
+    }, [id]);
 
     return (
         loading
@@ -94,7 +96,9 @@ export function TeacherSelect() {
                                             onSelect={(currentValue) => {
                                                 setValue((currentValue === value ? "" : currentValue).toLowerCase());
                                                 setOpen(false);
-                                                setCurrentId(teacher.id);
+                                                if (setCurrentId) {
+                                                    setCurrentId(teacher.id);
+                                                }
                                             }}
                                         >
                                             <Check
