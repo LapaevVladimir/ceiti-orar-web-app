@@ -8,21 +8,19 @@ import {Separator} from "@/components/ui/separator";
 
 const Schedule = () => {
     const [loading, setLoading] = useState(true);
-    const context = useContext(ScheduleContext);
 
-    if (!context) {
-        return null;
-    }
-
-    const {currentType, currentId} = context;
+    const currentType = useContext(ScheduleContext)?.currentType;
+    const currentId = useContext(ScheduleContext)?.currentId;
 
     const [result, setResult] = useState<ScheduleInterface>({data:{}, periods:[]});
 
     const fetchData = async () => {
         try {
-            const result = await getSchedule(currentId, currentType);
-            setResult(result);
-            setLoading(false);
+            if (currentId != null && currentType != null) {
+                const result = await getSchedule(currentId, currentType);
+                setResult(result);
+                setLoading(false);
+            }
         } catch (error) {
             console.error("Error fetching groups:", error);
         }
@@ -30,7 +28,6 @@ const Schedule = () => {
 
     useEffect(() => {
         fetchData();
-        console.log("ok");
     }, [loading]);
 
     useEffect(() => {

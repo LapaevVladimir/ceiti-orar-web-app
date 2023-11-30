@@ -30,7 +30,10 @@ const ScheduleDay = ({
                                     endPair={periods[index]["endtime"]}
                                     key={index}
                                 />
-                                <ScheduleCard data={value[1]}/>
+                                <ScheduleCard
+                                    data={value[1]}
+                                    key={index+10}
+                                />
                             </div>
                         ))}
                     </div>
@@ -43,7 +46,10 @@ const ScheduleDay = ({
                     <p className="transform -rotate-90 text-3xl">{day}</p>
                 </div>
                 {Object.entries(data).slice(0, 5).map((value) => (
-                    <ScheduleCard data={value[1]} key={value[0]}/>
+                    <ScheduleCard
+                        data={value[1]}
+                        key={value[0]}
+                    />
                 ))}
             </div>
         </div>
