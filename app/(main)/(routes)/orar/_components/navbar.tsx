@@ -3,6 +3,7 @@ import React  from 'react';
 import {ModeToggle} from "@/components/mode-toggle";
 import {SelectPanel} from "@/app/(main)/(routes)/orar/_components/select-panel";
 import {Separator} from "@/components/ui/separator";
+import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-compress";
 
 const Navbar = () => {
     return (
@@ -19,12 +20,14 @@ const Navbar = () => {
                         src="/light_icon.webp"
                         alt="logo"
                     />
-                    <div className="sm:hidden">
+                    <div className="flex flex-row sm:hidden">
+                        <ScheduleCompress/>
                         <ModeToggle/>
                     </div>
                 </div>
                 <SelectPanel/>
                 <div className="flex flex-row max-sm:hidden">
+                    <ScheduleCompress/>
                     <ModeToggle/>
                 </div>
             </div>

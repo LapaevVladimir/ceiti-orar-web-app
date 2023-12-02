@@ -18,7 +18,7 @@ const ScheduleTimeCard = ({
             {numberPair === 0 ? (
                 <Skeleton className="w-1/6 h-20 m-2 bg-muted rounded-xl flex justify-center items-center"/>
             ):(
-                <div className="w-1/6 h-20 m-2 rounded-xl flex justify-center items-center ">
+                <div className="w-1/6 h-20 m-2 rounded-xl flex justify-center items-center max-sm:h-10 max-sm:mt-0">
                     <div className="flex">
                         <p className="self-center rounded-md w-8 border text-center border-primary bg-muted">{numberPair}</p>
                         <p className="font-bold text-2xl">&nbsp; {startPair} - {endPair}</p>

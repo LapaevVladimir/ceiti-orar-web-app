@@ -5,14 +5,25 @@ import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers
 import ScheduleDay from "@/app/(main)/(routes)/orar/_components/schedule-day";
 import ScheduleNavbar from "@/app/(main)/(routes)/orar/_components/schedule-navbar";
 import {Separator} from "@/components/ui/separator";
+import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-compress";
 
 const Schedule = () => {
     const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState<ScheduleInterface>({data:{}, periods:[]});
+
+    const getCurrentDay = () => {
+        const currentDate = new Date();
+        const currentDay = currentDate.getDay();
+
+        return currentDay + (currentDay === 0 ? 6 : -1);
+    }
+
+    const currentDay: number = getCurrentDay();
 
     const currentType = useContext(ScheduleContext)?.currentType;
     const currentId = useContext(ScheduleContext)?.currentId;
+    const isShowAll = useContext(ScheduleContext)?.isShowAll;
 
-    const [result, setResult] = useState<ScheduleInterface>({data:{}, periods:[]});
 
     const fetchData = async () => {
         try {
@@ -39,13 +50,34 @@ const Schedule = () => {
             <div className="max-sm:hidden">
                 <ScheduleNavbar periods={periods}/>
             </div>
-            {Object.entries(data).map((value) =>(
-                <ScheduleDay
-                    day={value[0].charAt(0).toUpperCase() + value[0].slice(1)}
-                    data={value[1]}
-                    periods={periods}
-                    key={value[0]}
-                />
+            {Object.entries(data).map((value, index) => (
+                isShowAll ? (
+                    <ScheduleDay
+                        day={value[0].charAt(0).toUpperCase() + value[0].slice(1)}
+                        data={value[1]}
+                        periods={periods}
+                        key={value[0]}
+                    />
+                ):(
+                    currentDay === index || (currentDay > 4 && index == 4) ? (
+                        <div key={value[0]}>
+                            {currentDay === index &&
+                                <ScheduleDay
+                                day={`Today/${value[0].charAt(0).toUpperCase() + value[0].slice(1)}`}
+                                data={value[1]}
+                                periods={periods}
+                                />
+                            }
+                            <ScheduleDay
+                                day={index >= 4 ? "Next Week/Monday" : "Tomorrow"}
+                                data={Object.entries(data)[(index + 1) % 5][1]}
+                                periods={periods}
+                            />
+                        </div>
+                    ) : (
+                        <div key={value[0]}></div>
+                    )
+                )
             ))}
             <div className="fixed right-0 bottom-0 h-[40px] mb-8 mr-8 flex flex-row max-sm:mb-4 max-sm:mr-4">
                 <div className="w-[40px] h-full flex flex-col justify-around">
