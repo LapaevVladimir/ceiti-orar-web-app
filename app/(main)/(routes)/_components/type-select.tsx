@@ -16,7 +16,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import {useContext, useEffect} from "react";
-import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
+import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 
 const selectType = [
     {

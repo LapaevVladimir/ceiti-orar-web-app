@@ -1,9 +1,9 @@
 "use client";
 
 import React, {useState} from 'react';
-import {TypeSelect} from "@/app/(main)/(routes)/orar/_components/type-select";
-import {GroupSelect} from "@/app/(main)/(routes)/orar/_components/group-select";
-import {TeacherSelect} from "@/app/(main)/(routes)/orar/_components/teacher-select";
+import {TypeSelect} from "@/app/(main)/(routes)/_components/type-select";
+import {GroupSelect} from "@/app/(main)/(routes)/_components/group-select";
+import {TeacherSelect} from "@/app/(main)/(routes)/_components/teacher-select";
 
 export const SelectPanel = () => {
     const [currentType, setCurrentType] = useState("group");

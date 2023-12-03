@@ -16,35 +16,34 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { getGroups, Group } from "@/api-ceiti-get/api-ceiti-get";
+import {getTeachers, Teacher} from "@/api-ceiti-get/api-ceiti-get";
 import {useContext, useEffect, useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Skeleton} from "@/components/ui/skeleton";
-import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
+import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 
-export function GroupSelect() {
+export function TeacherSelect() {
     const [loading, setLoading] = useState(true);
-
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
     const [id, setId] = useState("");
 
-    const [groupsList, setGroupList] = useState<Group[]>([]);
+    const [teachersList, setTeachersList] = useState<Teacher[]>([]);
 
-    const setCurrentId =  useContext(ScheduleContext)?.setCurrentId;
-
-    const setDefaultValue = () => {
-        setValue(groupsList?.[0]?.name.toUpperCase());
-    }
+    const setCurrentId = useContext(ScheduleContext)?.setCurrentId;
 
     const setDefaultId = () => {
-        setId(groupsList?.[0]?.id);
+        setId(teachersList?.[0]?.id);
+    }
+
+    const setDefaultValue = () => {
+        setValue(teachersList?.[0]?.name.toLowerCase());
     }
 
     const fetchData = async () => {
         try {
-            const groups = await getGroups();
-            setGroupList(groups);
+            const groups = await getTeachers();
+            setTeachersList(groups);
             setLoading(false);
         } catch (error) {
             console.error("Error fetching groups:", error);
@@ -79,34 +78,36 @@ export function GroupSelect() {
                             className="w-[200px] justify-between"
                         >
                             {value
-                                ?  groupsList?.find((group: Group) => group.name === value)?.name
-                                : "Select Group"}
+                                ?  teachersList?.find((teacher: Teacher) => teacher.name.toLowerCase() === value)?.name
+                                : "Select Teacher"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[200px] p-0 h-72">
                         <Command>
-                            <CommandInput placeholder="Select Group" />
-                            <CommandEmpty>No group found.</CommandEmpty>
+                            <CommandInput placeholder="Select Teacher" />
+                            <CommandEmpty>No teacher found.</CommandEmpty>
                             <ScrollArea className="h-72 w-full">
                                 <CommandGroup className="px-2">
-                                    {groupsList?.map((group: Group) => (
+                                    {teachersList?.map((teacher: Teacher) => (
                                         <CommandItem
-                                            key={group.id}
-                                            value={group.name}
+                                            key={teacher.id}
+                                            value={teacher.name}
                                             onSelect={(currentValue) => {
-                                                setValue((currentValue === value ? "" : currentValue).toUpperCase());
+                                                setValue((currentValue === value ? "" : currentValue).toLowerCase());
                                                 setOpen(false);
-                                                setId(group.id);
+                                                if (setCurrentId) {
+                                                    setCurrentId(teacher.id);
+                                                }
                                             }}
                                         >
                                             <Check
                                                 className={cn(
                                                     "mr-2 h-4 w-4",
-                                                    value === group.name ? "opacity-100" : "opacity-0"
+                                                    value === teacher.name.toLowerCase() ? "opacity-100" : "opacity-0"
                                                 )}
                                             />
-                                            {group.name}
+                                            {teacher.name}
                                         </CommandItem>
                                     ))}
                                 </CommandGroup>

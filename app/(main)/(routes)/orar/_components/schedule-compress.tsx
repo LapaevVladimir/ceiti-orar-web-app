@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button";
 import {ChevronDown, ChevronUp} from "lucide-react";
 import {useContext, useState} from "react";
 import {cn} from "@/lib/utils";
-import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
+import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 
 export const ScheduleCompress = () => {
     const [isChecked, setIsChecked] = useState(false);

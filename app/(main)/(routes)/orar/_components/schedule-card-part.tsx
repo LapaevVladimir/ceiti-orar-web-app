@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Separator} from "@/components/ui/separator";
 import {Badge} from "@/components/ui/badge";
-import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
+import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 import {getIsCurrentWeekEven} from "@/api-ceiti-get/api-ceiti-get";
 import {cn} from "@/lib/utils";
 

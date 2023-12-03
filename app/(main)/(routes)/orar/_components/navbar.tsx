@@ -1,7 +1,7 @@
 "use client";
 
 import {ModeToggle} from "@/components/mode-toggle";
-import {SelectPanel} from "@/app/(main)/(routes)/orar/_components/select-panel";
+import {SelectPanel} from "@/app/(main)/(routes)/_components/select-panel";
 import {Separator} from "@/components/ui/separator";
 import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-compress";
 const Navbar = () => {

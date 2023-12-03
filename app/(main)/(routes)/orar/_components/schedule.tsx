@@ -1,7 +1,7 @@
 "use client";
 import React, {useContext, useEffect, useState} from 'react';
 import {getSchedule, ScheduleInterface} from "@/api-ceiti-get/api-ceiti-get";
-import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers/schedule-provider";
+import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 import ScheduleDay from "@/app/(main)/(routes)/orar/_components/schedule-day";
 import ScheduleNavbar from "@/app/(main)/(routes)/orar/_components/schedule-navbar";
 import {Separator} from "@/components/ui/separator";
