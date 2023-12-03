@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import ScheduleCard from "@/app/(main)/(routes)/orar/_components/schedule-card";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import ScheduleTimeCard from "@/app/(main)/(routes)/orar/_components/schedule-time-card";
-import {start} from "repl";
+import ScheduleCheckDays from "@/app/(main)/(routes)/orar/_components/schedule-check-days";
 
 interface DayProps{
     day: string
@@ -20,6 +20,8 @@ const ScheduleDay = ({
 
     const [currentPair, setCurrentPair] = useState(6)
     const [nextPair, setNextPair] = useState(6)
+
+    const [isDays, setIsDays] = useState([true, true, true, true, true]);
 
     function TimeInRange() {
         const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -82,12 +84,15 @@ const ScheduleDay = ({
                                     data={value[1]}
                                     isCurrent={currentPair === index}
                                     isNext={nextPair === index}
+                                    isDays={isDays}
+                                    index={index}
                                 />
                             </div>
                         ))}
                     </div>
-                    <ScrollBar orientation="horizontal" />
+                    <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
+                <ScheduleCheckDays isDays={isDays}/>
             </div>
 
             <div className="max-sm:hidden sm:w-full flex justify-center">
@@ -100,6 +105,8 @@ const ScheduleDay = ({
                         key={value[0]}
                         isCurrent={currentPair === index}
                         isNext={nextPair === index}
+                        isDays={isDays}
+                        index={index}
                     />
                 ))}
             </div>

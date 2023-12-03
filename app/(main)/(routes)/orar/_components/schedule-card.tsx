@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import ScheduleCardPart from "@/app/(main)/(routes)/orar/_components/schedule-card-part";
 import {Separator} from "@/components/ui/separator";
 import {cn} from "@/lib/utils";
@@ -8,13 +8,26 @@ interface CardProps{
     data: any
     isCurrent: boolean
     isNext: boolean
+    isDays: boolean[]
+    index: number
 }
 
 const ScheduleCard = ({
     data,
     isCurrent,
     isNext,
+    isDays,
+    index,
 }:CardProps) => {
+
+    useEffect(() => {
+        if(data["impar"]?.length === 0 && data["par"]?.length === 0 && data["both"]?.length === 0){
+            isDays[index] = false
+        }else{
+            isDays[index] = true
+        }
+    }, [data]);
+
     return (
         <div
             className={cn("max-sm:w-[300px] sm:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl",
