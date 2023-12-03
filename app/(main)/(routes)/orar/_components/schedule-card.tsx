@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import ScheduleCardPart from "@/app/(main)/(routes)/orar/_components/schedule-card-part";
 import {Separator} from "@/components/ui/separator";
 import {cn} from "@/lib/utils";
@@ -10,6 +10,7 @@ interface CardProps{
     isNext: boolean
     isDays: boolean[]
     index: number
+    checkIsEven: () => boolean
 }
 
 const ScheduleCard = ({
@@ -18,19 +19,24 @@ const ScheduleCard = ({
     isNext,
     isDays,
     index,
+    checkIsEven,
 }:CardProps) => {
-
-    useEffect(() => {
+    const changeChecks = () => {
+        isDays[index] = true
         if(data["impar"]?.length === 0 && data["par"]?.length === 0 && data["both"]?.length === 0){
             isDays[index] = false
-        }else{
-            isDays[index] = true
         }
+    }
+
+    changeChecks();
+
+    useEffect(() => {
+        changeChecks();
     }, [data]);
 
     return (
         <div
-            className={cn("max-sm:w-[300px] sm:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl",
+            className={cn("max-sm:w-[300px] sm:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl overflow-hidden",
                 isCurrent && "dark:bg-[#0F0F0F] bg-[#C0C0C0] font-bold border-primary border-[1px]",
                 isNext && "dark:bg-[#0F0F0F] bg-[#DCDCDC] border-secondary font-bold border-[1px]")
         }>
@@ -38,22 +44,24 @@ const ScheduleCard = ({
                 <div className="h-full">
                     <div className="h-1/2">
                         {data["impar"]?.length > 0 ? (
-                            <ScheduleCardPart data={data["impar"]}/>
+                            <ScheduleCardPart data={data["impar"]} checkIsEven={checkIsEven}/>
                         ):(
-                            <div className="h-full"></div>
+                            <ScheduleCardPart data={[]} checkIsEven={checkIsEven}/>
                         )}
-                        <Separator className="bg-green-500"/>
+                        <Separator className="bg-green-500 "/>
                     </div>
                     <div className="h-1/2">
-                        {data["par"]?.length > 0 && (
-                            <ScheduleCardPart data={data["par"]}/>
+                        {data["par"]?.length > 0 ? (
+                            <ScheduleCardPart data={data["par"]} checkIsEven={checkIsEven}/>
+                        ):(
+                            <ScheduleCardPart data={[]} checkIsEven={checkIsEven}/>
                         )}
                     </div>
                 </div>
             )}
             {data["both"]?.length > 0 && (
                 <div className="h-full">
-                    <ScheduleCardPart data={data["both"]}/>
+                    <ScheduleCardPart data={data["both"]} checkIsEven={checkIsEven}/>
                 </div>
             )}
             {data["impar"]?.length === 0 &&  data["par"]?.length === 0 && data["both"]?.length === 0 && (

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {bool} from "prop-types";
 
 interface GroupGet {
     _id: string;
@@ -70,5 +71,21 @@ export const getSchedule = async (id:string, type:string): Promise<ScheduleInter
     } catch (error) {
         console.error(error);
         return {data:{}, periods:[]};
+    }
+}
+
+export const getIsCurrentWeekEven = async (): Promise<boolean> => {
+    try {
+        const millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
+        const startDate = new Date(2023, 11, 3, 11, 0, 0);
+        const currentDate = new Date();
+
+        const timeDifference = Math.abs(startDate.getTime() - currentDate.getTime());
+        const weeksDifference = Math.floor(timeDifference / millisecondsInWeek);
+
+        return (weeksDifference % 2) === 1;
+    }catch (error) {
+        console.error(error);
+        return false;
     }
 }

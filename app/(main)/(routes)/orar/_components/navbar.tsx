@@ -1,11 +1,11 @@
+"use client";
 
-import React  from 'react';
 import {ModeToggle} from "@/components/mode-toggle";
 import {SelectPanel} from "@/app/(main)/(routes)/orar/_components/select-panel";
 import {Separator} from "@/components/ui/separator";
 import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-compress";
-
 const Navbar = () => {
+
     return (
         <div className="w-full">
             <div className="w-full flex flex-row justify-between p-4 max-sm:flex-col">

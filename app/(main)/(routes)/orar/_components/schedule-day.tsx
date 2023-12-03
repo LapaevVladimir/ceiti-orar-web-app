@@ -5,6 +5,8 @@ import ScheduleCard from "@/app/(main)/(routes)/orar/_components/schedule-card";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import ScheduleTimeCard from "@/app/(main)/(routes)/orar/_components/schedule-time-card";
 import ScheduleCheckDays from "@/app/(main)/(routes)/orar/_components/schedule-check-days";
+import {getIsCurrentWeekEven} from "@/api-ceiti-get/api-ceiti-get";
+import {Badge} from "@/components/ui/badge";
 
 interface DayProps{
     day: string
@@ -17,21 +19,31 @@ const ScheduleDay = ({
     data,
     periods
 }: DayProps) => {
+    const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     const [currentPair, setCurrentPair] = useState(6)
     const [nextPair, setNextPair] = useState(6)
+    const [isEven, setIsEven] = useState(false);
+    const [isDays, setIsDays] = useState([false, false, false, false, false]);
 
-    const [isDays, setIsDays] = useState([true, true, true, true, true]);
+    const fetchData = async () => {
+        try {
+            const even = await getIsCurrentWeekEven();
+            setIsEven(even);
+        } catch (error) {
+            console.error("Error fetching current week:", error);
+        }
+    };
 
     function TimeInRange() {
-        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-        const pos = days.indexOf(day);
+        const pos = daysOfWeek.indexOf(day);
+
         const c = new Date();
 
         let currentDay = c.getDay();
         currentDay += (currentDay === 0 ? 6 : -1);
 
-        if(!days.includes(day) || pos !== currentDay){
+        if(!day.includes("Today") && (!daysOfWeek.includes(day) || pos !== currentDay)){
             return ;
         }
         setNextPair(0)
@@ -63,7 +75,14 @@ const ScheduleDay = ({
 
     useEffect(() => {
         TimeInRange();
+        fetchData();
     }, []);
+
+    const checkIsEven = () =>{
+        if(!daysOfWeek.includes(day) && day.includes("Next"))
+            return !isEven;
+        return isEven;
+    }
 
     return (
         <div className="flex sm:w-full h-full justify-center">
@@ -86,13 +105,17 @@ const ScheduleDay = ({
                                     isNext={nextPair === index}
                                     isDays={isDays}
                                     index={index}
+                                    checkIsEven={checkIsEven}
                                 />
                             </div>
                         ))}
                     </div>
                     <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
-                <ScheduleCheckDays isDays={isDays}/>
+                <div className="w-full flex flex-row justify-between">
+                    <Badge className="ml-8 h-1/2">{checkIsEven() ? "Even" : "Not Even"}</Badge>
+                    <ScheduleCheckDays isDays={isDays}/>
+                </div>
             </div>
 
             <div className="max-sm:hidden sm:w-full flex justify-center">
@@ -107,6 +130,7 @@ const ScheduleDay = ({
                         isNext={nextPair === index}
                         isDays={isDays}
                         index={index}
+                        checkIsEven={checkIsEven}
                     />
                 ))}
             </div>

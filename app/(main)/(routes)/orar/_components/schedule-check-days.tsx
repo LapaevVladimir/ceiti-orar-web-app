@@ -1,5 +1,4 @@
 "use client";
-import React, {useContext, useEffect} from 'react';
 import {Circle, CircleDot} from "lucide-react";
 
 interface Props{

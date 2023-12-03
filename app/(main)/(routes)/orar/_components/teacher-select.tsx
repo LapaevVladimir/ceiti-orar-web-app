@@ -16,7 +16,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import {getGroups, getTeachers, Group, Teacher} from "@/api-ceiti-get/api-ceiti-get";
+import {getTeachers, Teacher} from "@/api-ceiti-get/api-ceiti-get";
 import {useContext, useEffect, useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Skeleton} from "@/components/ui/skeleton";

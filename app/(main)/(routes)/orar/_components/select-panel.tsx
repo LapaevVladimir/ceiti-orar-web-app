@@ -7,7 +7,6 @@ import {TeacherSelect} from "@/app/(main)/(routes)/orar/_components/teacher-sele
 
 export const SelectPanel = () => {
     const [currentType, setCurrentType] = useState("group");
-    const [currentId, setCurrentId] = useState("");
 
     return (
         <div className="max-sm:flex-col max-sm:w-full max-sm:items-center

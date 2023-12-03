@@ -5,7 +5,6 @@ import {ScheduleContext} from "@/app/(main)/(routes)/orar/_components/_providers
 import ScheduleDay from "@/app/(main)/(routes)/orar/_components/schedule-day";
 import ScheduleNavbar from "@/app/(main)/(routes)/orar/_components/schedule-navbar";
 import {Separator} from "@/components/ui/separator";
-import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-compress";
 
 const Schedule = () => {
     const [loading, setLoading] = useState(true);
