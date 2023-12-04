@@ -83,7 +83,7 @@ const ScheduleCardPart = ({
 
     return (
         <div className={cn("h-full w-full",
-            checkIsEven() !== isEven ? "shadow-down" : "shadow-up"
+            checkIsEven() ? "shadow-down" : "shadow-up"
             )}
         >
             {data.length > 0 && (

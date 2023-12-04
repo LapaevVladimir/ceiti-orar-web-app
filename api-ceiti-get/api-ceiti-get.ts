@@ -77,7 +77,7 @@ export const getSchedule = async (id:string, type:string): Promise<ScheduleInter
 export const getIsCurrentWeekEven = async (): Promise<boolean> => {
     try {
         const millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
-        const startDate = new Date(2023, 11, 3, 11, 0, 0);
+        const startDate = new Date(2023, 10, 27, 0, 0, 1);
         const currentDate = new Date();
 
         const timeDifference = Math.abs(startDate.getTime() - currentDate.getTime());
