@@ -45,8 +45,8 @@ const Schedule = () => {
     const {periods, data} = result;
 
     return (
-        <div className="sm:w-full h-full p-4 max-sm:w-screen">
-            <div className="max-sm:hidden">
+        <div className="xl:w-full h-full pt-4 pb-4 max-sm:w-screen">
+            <div className="max-xl:hidden">
                 <ScheduleNavbar periods={periods}/>
             </div>
             {Object.entries(data).map((value, index) => (
@@ -62,13 +62,13 @@ const Schedule = () => {
                         <div key={value[0]}>
                             {currentDay === index &&
                                 <ScheduleDay
-                                day={`Today/${value[0].charAt(0).toUpperCase() + value[0].slice(1)}`}
+                                day={`Today - ${value[0].charAt(0).toUpperCase() + value[0].slice(1)}`}
                                 data={value[1]}
                                 periods={periods}
                                 />
                             }
                             <ScheduleDay
-                                day={index >= 4 ? "Next Week/Monday" : "Tomorrow"}
+                                day={index >= 4 ? "Next Week - Monday" : "Tomorrow"}
                                 data={Object.entries(data)[(index + 1) % 5][1]}
                                 periods={periods}
                             />
@@ -78,7 +78,7 @@ const Schedule = () => {
                     )
                 )
             ))}
-            <div className="fixed right-0 bottom-0 h-[40px] mb-8 mr-8 flex flex-row max-sm:mb-4 max-sm:mr-4">
+            <div className="fixed right-0 bottom-0 h-[40px] mb-8 mr-8 flex flex-row max-md:mb-4 max-md:mr-4">
                 <div className="w-[40px] h-full flex flex-col justify-around">
                     <Separator className="bg-green-500 h-[2px]"/>
                     <Separator className="bg-purple-600 h-[2px]"/>

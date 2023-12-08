@@ -10,7 +10,7 @@ const ScheduleNavbar = ({
 }:NavbarProps) => {
     return (
         <div className="flex w-full justify-center">
-            <div className="w-20 m-2"/>
+            <div className="w-20 m-2 max-lg:w-12"/>
             {periods.length > 0 ?
                 periods.map((element, index) => (
                     <ScheduleTimeCard

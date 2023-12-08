@@ -10,7 +10,7 @@ const ScheduleCheckDays = ({
 }:Props) => {
 
     return (
-        <div className="flex justify-between sm:hidden w-1/4 pr-8 mb-4 ml-auto">
+        <div className="flex justify-between xl:hidden md:w-1/5 lg:w-1/6 w-1/4 pr-8 mb-4 ml-auto">
             {isDays?.map((value, index) => (
                 value ? (
                     <CircleDot key={index}/>

@@ -36,7 +36,7 @@ const ScheduleCard = ({
 
     return (
         <div
-            className={cn("max-sm:w-[300px] sm:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl overflow-hidden",
+            className={cn("max-xl:w-[300px] xl:w-1/6 aspect-[5/4] m-2 bg-muted rounded-xl overflow-hidden",
                 isCurrent && "dark:bg-[#0F0F0F] bg-[#C0C0C0] font-bold border-primary border-[1px]",
                 isNext && "dark:bg-[#0F0F0F] bg-[#DCDCDC] border-secondary font-bold border-[1px]")
         }>

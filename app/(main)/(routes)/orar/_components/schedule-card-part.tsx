@@ -79,8 +79,6 @@ const ScheduleCardPart = ({
 
     const isEntire: boolean = !(data && data.length > 1);
 
-    console.log(data)
-
     return (
         <div className={cn("h-full w-full",
             checkIsEven() ? "shadow-down" : "shadow-up"
@@ -89,20 +87,20 @@ const ScheduleCardPart = ({
             {data.length > 0 && (
                 <div className="h-full w-full flex justify-center items-center flex-col">
                     <div className="w-full h-1/2 flex flex-col justify-center">
-                        <div className="flex justify-center">
-                            <p className="text-sm">{subject}</p>
-                            <Badge className="ml-2">{classroom}</Badge>
+                        <div className="flex justify-center mx-2">
+                            <p className="text-sm max-2xl:text-xs flex items-center py-auto text-center truncate">{subject}</p>
+                            <Badge className="ml-2 max-2xl:text-[0.6rem] max-2xl:py-0">{classroom}</Badge>
                         </div>
-                        <div className="flex justify-center mt-2">
+                        <div className="flex justify-center mt-2 xl:mt-1">
                             {isGroup && !isTeacher && (
-                                <Badge className="ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
+                                <Badge className="max-2xl:text-[0.6rem] max-2xl:py-0 ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
                                 hover:bg-blue-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">Group {groupId}</Badge>
                             )}
                             {isTeacher && groupId !== "�" && (
-                                <Badge className="ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
+                                <Badge className="max-2xl:text-[0.6rem] max-2xl:py-0 ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
                                 hover:bg-blue-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">Group {groupId}</Badge>
                             )}
-                            <Badge className="ml-2 bg-green-500 opacity-80 dark:bg-opacity-20 text-green-950 dark:text-green-200
+                            <Badge className="max-2xl:text-[0.6rem] max-2xl:py-0  ml-2 bg-green-500 opacity-80 dark:bg-opacity-20 text-green-950 dark:text-green-200
                                 hover:bg-green-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">{name}</Badge>
                         </div>
                     </div>
@@ -110,15 +108,15 @@ const ScheduleCardPart = ({
                         <Separator className="bg-purple-600"/>
                     )}
                     {!isEntire && (
-                        <div className="w-4/5 h-1/2 flex flex-col justify-center">
+                        <div className="w-full h-1/2 flex flex-col justify-center">
                             <div className="flex justify-center">
-                                <p className="text-sm">{subject2}</p>
-                                <Badge className="ml-2">{classroom2}</Badge>
+                                <p className="text-sm max-2xl:text-xs flex items-center text-center truncate">{subject2}</p>
+                                <Badge className="ml-2 max-2xl:text-[0.6rem] max-2xl:py-0">{classroom2}</Badge>
                             </div>
-                            <div className="flex justify-center mt-2">
-                                <Badge className="ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
+                            <div className="flex justify-center mt-2 mx-2 xl:mt-1">
+                                <Badge className="max-2xl:text-[0.6rem] max-2xl:py-0 text-center ml-2 bg-blue-500 opacity-80 dark:bg-opacity-20 text-blue-950 dark:text-blue-200
                                 hover:bg-blue-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">Group {groupId === "1" ? 2 : 1}</Badge>
-                                <Badge className="ml-2 bg-green-500 opacity-80 dark:bg-opacity-20 text-green-950 dark:text-green-200
+                                <Badge className="max-2xl:text-[0.6rem] max-2xl:py-0 text-center ml-2 bg-green-500 opacity-80 dark:bg-opacity-20 text-green-950 dark:text-green-200
                                 hover:bg-green-600 hover:bg-opacity-80 hover:dark:bg-opacity-20">{name2}</Badge>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ScheduleCard from "@/app/(main)/(routes)/orar/_components/schedule-card";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import ScheduleTimeCard from "@/app/(main)/(routes)/orar/_components/schedule-time-card";
@@ -35,6 +35,7 @@ const ScheduleDay = ({
         }
     };
 
+
     function TimeInRange() {
         const pos = daysOfWeek.indexOf(day);
 
@@ -49,17 +50,20 @@ const ScheduleDay = ({
         setNextPair(0)
 
         Object.entries(periods).slice(0, 5).map((value, index) => {
+            const start: string = periods[index]["starttime"];
+            const end: string = periods[index]["endtime"];
+
             const startDate = new Date(c.getFullYear(),
                 c.getMonth(),
                 c.getDate(),
-                parseInt(periods[index]["starttime"].substr(0, 2)),
-                parseInt(periods[index]["starttime"].substr(3, 2)),
+                parseInt(start.length > 4 ? start.substr(0, 2) : start.substr(0, 1)),
+                parseInt(start.length > 4 ? start.substr(3, 2) : start.substr(3, 1)),
                 0);
             const endDate = new Date(c.getFullYear(),
                 c.getMonth(),
                 c.getDate(),
-                parseInt(periods[index]["endtime"].substr(0, 2)),
-                parseInt(periods[index]["endtime"].substr(3, 2)),
+                parseInt(end.length > 4 ? end.substr(0, 2) : end.substr(0, 1)),
+                parseInt(end.length > 4 ? end.substr(3, 2) : end.substr(3, 1)),
                 0);
 
             if(startDate <= c && c <= endDate){
@@ -85,12 +89,14 @@ const ScheduleDay = ({
     }
 
     return (
-        <div className="flex sm:w-full h-full justify-center">
-            <div className="sm:hidden w-screen mb-12 rounded-md border dark:bg-[#1F1F1F] dark:bg-opacity-10 bg-[#DCDCDC] bg-opacity-[2%]">
+        <div className="flex xl:w-full h-full justify-center">
+            <div className="xl:hidden w-screen mb-12 rounded-md border dark:bg-[#1F1F1F] dark:bg-opacity-10 bg-[#DCDCDC] bg-opacity-[2%]">
                 <div className="m-2 mt-4 flex justify-center items-center">
                     <p className="text-3xl text-center">{day}</p>
                 </div>
-                <ScrollArea className="w-screen whitespace-nowrap">
+                <ScrollArea className="w-screen whitespace-nowrap"
+
+                >
                     <div className="flex w-max space-x-4 p-4 bg">
                         {Object.entries(data).slice(0, 5).map((value, index) => (
                             <div className="flex flex-col justify-center items-center" key={index}>
@@ -110,17 +116,17 @@ const ScheduleDay = ({
                             </div>
                         ))}
                     </div>
-                    <ScrollBar orientation="horizontal"/>
+                    <ScrollBar className="md:h-full md:opacity-0" orientation="horizontal"/>
                 </ScrollArea>
                 <div className="w-full flex flex-row justify-between">
-                    <Badge className="ml-8 h-1/2">{checkIsEven() ? "Even" : "Not Even"}</Badge>
+                    <Badge className="ml-8 h-1/2 sm:h-2/3 sm:text-sm">{checkIsEven() ? "Even" : "Not Even"}</Badge>
                     <ScheduleCheckDays isDays={isDays}/>
                 </div>
             </div>
 
-            <div className="max-sm:hidden sm:w-full flex justify-center">
+            <div className="max-xl:hidden xl:w-full flex justify-center">
                 <div className="w-20 m-2 bg-muted rounded-xl flex justify-center items-center">
-                    <p className="transform -rotate-90 text-3xl">{day}</p>
+                    <p style={{ writingMode: 'vertical-lr' }} className="h-[150px] -rotate-180 transform text-2xl text-center">{day}</p>
                 </div>
                 {Object.entries(data).slice(0, 5).map((value, index) => (
                     <ScheduleCard

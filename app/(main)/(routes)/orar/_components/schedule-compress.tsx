@@ -1,7 +1,7 @@
 "use client";
 import {Button} from "@/components/ui/button";
 import {ChevronDown, ChevronUp} from "lucide-react";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {cn} from "@/lib/utils";
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 
@@ -9,6 +9,12 @@ export const ScheduleCompress = () => {
     const [isChecked, setIsChecked] = useState(false);
 
     const setIsShowAll = useContext(ScheduleContext)?.setIsShowAll;
+    const isShowAll = useContext(ScheduleContext)?.isShowAll;
+
+    useEffect(() => {
+        if(isShowAll !== undefined)
+            setIsChecked(!isShowAll);
+    }, [isShowAll]);
 
     const onClick = () => {
         if (setIsShowAll) {

@@ -9,8 +9,8 @@ export const SelectPanel = () => {
     const [currentType, setCurrentType] = useState("group");
 
     return (
-        <div className="max-sm:flex-col max-sm:w-full max-sm:items-center
-         flex flex-row">
+        <div className="max-sm:flex-col max-lg:w-full max-lg:items-center
+         flex flex-row max-lg:justify-center">
             <div className="max-sm:pb-4">
                 <TypeSelect setType={setCurrentType}/>
             </div>
@@ -21,7 +21,6 @@ export const SelectPanel = () => {
                     <TeacherSelect/>
                 )}
             </div>
-
         </div>
     );
 };
