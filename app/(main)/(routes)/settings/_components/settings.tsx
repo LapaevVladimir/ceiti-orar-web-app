@@ -9,6 +9,7 @@ import {api} from "@/convex/_generated/api";
 import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 import {toast} from "sonner";
+import {useTheme} from "next-themes";
 
 const Settings = () => {
     const { user, webApp } = useTelegram();
@@ -21,12 +22,15 @@ const Settings = () => {
 
     const currentId= useContext(ScheduleContext)?.currentId;
 
+    const {theme} = useTheme();
+
     const onSubmit = () => {
         if(!isExist){
             const promise = create({
                 userId: user?.id.toString() || "",
                 type: currentType || "class",
-                selectedId: currentId || ""
+                selectedId: currentId || "",
+                theme: theme || "system"
             });
 
             toast.promise(promise, {
@@ -35,13 +39,14 @@ const Settings = () => {
                 error: "Failed to create settings."
             });
         }else{
-            if(isExist.id === currentId && isExist.type === currentType){
+            if(isExist.id === currentId && isExist.type === currentType && isExist.theme === theme){
                 toast.error("Settings are already saved")
             }else {
                 const promise = update({
                     userId: user?.id.toString() || "",
                     type: currentType || "class",
-                    selectedId: currentId || ""
+                    selectedId: currentId || "",
+                    theme: theme || "system"
                 });
 
                 toast.promise(promise, {
@@ -54,9 +59,8 @@ const Settings = () => {
     }
 
     return (
-        <div className="h-screen w-screen flex flex-col justify-center items-center">
-            {user?.id}
-            <h1 className="mb-8 text-2xl">Settings</h1>
+        <div className="h-screen w-screen flex flex-col items-center">
+            <h1 className="mb-8 mt-4 text-2xl">Settings</h1>
             <SelectPanel/>
             <div className="mt-4 flex">
                 <ReturnOrar/>

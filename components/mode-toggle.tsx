@@ -11,9 +11,20 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {useQuery} from "convex/react";
+import {api} from "@/convex/_generated/api";
+import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
+import {useEffect} from "react";
 
 export function ModeToggle() {
+    const { user, webApp } = useTelegram();
     const { setTheme } = useTheme()
+
+    const promise = useQuery(api.settings.getUserSettings, {userId: user?.id.toString() || ""});
+
+    useEffect(() => {
+        setTheme(promise && promise.theme || "system")
+    }, [promise]);
 
     return (
         <DropdownMenu>

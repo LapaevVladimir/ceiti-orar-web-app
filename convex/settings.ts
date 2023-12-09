@@ -6,13 +6,15 @@ export const create = mutation({
     args: {
         userId: v.string(),
         type: v.string(),
-        selectedId: v.string()
+        selectedId: v.string(),
+        theme: v.string()
     },
     handler: async (ctx, args) => {
         const setting = await ctx.db.insert("settings",{
             userId: args.userId,
             type: args.type,
-            selectedId: args.selectedId
+            selectedId: args.selectedId,
+            theme: args.theme
         })
 
         return setting;
@@ -39,7 +41,8 @@ export const update = mutation({
     args: {
         userId: v.string(),
         type: v.string(),
-        selectedId: v.string()
+        selectedId: v.string(),
+        theme: v.string()
     },
     handler: async (ctx, args) => {
         const result = await ctx.db.query("settings")
@@ -85,7 +88,8 @@ export const getUserSettings = query({
         if (existingUser.length) {
             return {
                 type: existingUser[0].type,
-                id: existingUser[0].selectedId
+                id: existingUser[0].selectedId,
+                theme: existingUser[0].theme
             };
         }
         return false;

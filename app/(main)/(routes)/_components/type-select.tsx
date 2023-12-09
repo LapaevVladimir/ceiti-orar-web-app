@@ -43,32 +43,15 @@ export function TypeSelect({
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("class")
 
-    const setCurrentType = useContext(ScheduleContext)?.setCurrentType;
-
     const promise = useQuery(api.settings.getUserSettings, {userId: user?.id.toString() || ""});
 
     useEffect(() => {
-       /* if (setCurrentType) {
-            if(promise){
-                setValue(promise.type)
-            }
-            setCurrentType(value);
-        }*/
-    }, []);
-
-    useEffect(() => {
-        if (setCurrentType) {
-            if(promise){
-                setValue(promise.type)
-            }
-            setCurrentType(value);
-            setType(promise && promise.type || value)
-        }
+        setValue(promise && promise.type || value)
+        setType(promise && promise.type || value)
     }, [promise]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            {value}
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"
@@ -91,9 +74,6 @@ export function TypeSelect({
                                     setValue(currentValue)
                                     setOpen(false)
                                     setType(currentValue)
-                                    if (setCurrentType) {
-                                        setCurrentType(currentValue === "teacher" ? "teacher" : "class")
-                                    }
                                 }}
                             >
                                 <Check

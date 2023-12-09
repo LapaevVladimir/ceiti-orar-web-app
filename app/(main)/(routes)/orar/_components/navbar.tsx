@@ -7,11 +7,8 @@ import {ScheduleCompress} from "@/app/(main)/(routes)/orar/_components/schedule-
 import {ScheduleSettings} from "@/app/(main)/(routes)/orar/_components/schedule-settings";
 import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
 const Navbar = () => {
-    const { user, webApp } = useTelegram();
-
     return (
         <div className="w-full">
-            {user?.id}
             <div className="w-full flex flex-row justify-between p-4 max-lg:flex-col">
                 <div className="flex flex-row justify-between items-center max-lg:pb-4">
                     <img
