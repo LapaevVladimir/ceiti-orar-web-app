@@ -48,7 +48,7 @@ export const getGroups = async (): Promise<Group[]> => {
     }
 };
 
-export const getTeachers = async (): Promise<Group[]> => {
+export const getTeachers = async (): Promise<Teacher[]> => {
     try {
         const response = await axios.get(urlTeachers);
         const teachers = response.data.map((teacher: {_id: string, name: string}) => ({

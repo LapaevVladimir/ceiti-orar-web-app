@@ -21,10 +21,13 @@ import {useContext, useEffect, useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Skeleton} from "@/components/ui/skeleton";
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
+import {useQuery} from "convex/react";
+import {api} from "@/convex/_generated/api";
+import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
 
 export function GroupSelect() {
+    const { user, webApp } = useTelegram();
     const [loading, setLoading] = useState(true);
-
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
     const [id, setId] = useState("");
@@ -32,13 +35,15 @@ export function GroupSelect() {
     const [groupsList, setGroupList] = useState<Group[]>([]);
 
     const setCurrentId =  useContext(ScheduleContext)?.setCurrentId;
-
-    const setDefaultValue = () => {
-        setValue(groupsList?.[0]?.name.toUpperCase());
-    }
+    const promise = useQuery(api.settings.getUserSettings, {userId: user?.id.toString() || ""});
 
     const setDefaultId = () => {
-        setId(groupsList?.[0]?.id);
+        setId(promise && promise.id || groupsList?.[0]?.id);
+    }
+
+    const setDefaultValue = () => {
+        const index = promise && groupsList?.findIndex(item => item.id === promise.id) || 0;
+        setValue(groupsList?.[index]?.name.toUpperCase());
     }
 
     const fetchData = async () => {
@@ -58,7 +63,7 @@ export function GroupSelect() {
     useEffect(() => {
         setDefaultValue();
         setDefaultId();
-    }, [loading]);
+    }, [loading, promise]);
 
     useEffect(() => {
         if (setCurrentId) {
@@ -78,9 +83,11 @@ export function GroupSelect() {
                             aria-expanded={open}
                             className="w-[200px] justify-between"
                         >
-                            {value
-                                ?  groupsList?.find((group: Group) => group.name === value)?.name
-                                : "Select Group"}
+                            {value ?
+                                groupsList?.find((group: Group) => group.name.toUpperCase() === value)?.name
+                                :
+                                "Select Group"
+                            }
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                     </PopoverTrigger>
@@ -103,7 +110,7 @@ export function GroupSelect() {
                                             <Check
                                                 className={cn(
                                                     "mr-2 h-4 w-4",
-                                                    value === group.name ? "opacity-100" : "opacity-0"
+                                                    value === group.name.toUpperCase() ? "opacity-100" : "opacity-0"
                                                 )}
                                             />
                                             {group.name}

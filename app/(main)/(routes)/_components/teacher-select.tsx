@@ -21,8 +21,12 @@ import {useContext, useEffect, useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Skeleton} from "@/components/ui/skeleton";
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
+import {useQuery} from "convex/react";
+import {api} from "@/convex/_generated/api";
+import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
 
 export function TeacherSelect() {
+    const { user, webApp } = useTelegram();
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
@@ -31,19 +35,21 @@ export function TeacherSelect() {
     const [teachersList, setTeachersList] = useState<Teacher[]>([]);
 
     const setCurrentId = useContext(ScheduleContext)?.setCurrentId;
+    const promise = useQuery(api.settings.getUserSettings, {userId: user?.id.toString() || ""});
 
     const setDefaultId = () => {
-        setId(teachersList?.[0]?.id);
+        setId(promise && promise.id || teachersList?.[0]?.id);
     }
 
     const setDefaultValue = () => {
-        setValue(teachersList?.[0]?.name.toLowerCase());
+        const index = promise && teachersList?.findIndex(item => item.id === promise.id) || 0;
+        setValue(teachersList?.[index]?.name.toLowerCase());
     }
 
     const fetchData = async () => {
         try {
-            const groups = await getTeachers();
-            setTeachersList(groups);
+            const teachers = await getTeachers();
+            setTeachersList(teachers);
             setLoading(false);
         } catch (error) {
             console.error("Error fetching groups:", error);
@@ -57,7 +63,7 @@ export function TeacherSelect() {
     useEffect(() => {
         setDefaultValue();
         setDefaultId();
-    }, [loading]);
+    }, [loading, promise]);
 
     useEffect(() => {
         if (setCurrentId) {
@@ -77,9 +83,11 @@ export function TeacherSelect() {
                             aria-expanded={open}
                             className="w-[200px] justify-between"
                         >
-                            {value
-                                ?  teachersList?.find((teacher: Teacher) => teacher.name.toLowerCase() === value)?.name
-                                : "Select Teacher"}
+                            {value ?
+                                teachersList?.find((teacher: Teacher) => teacher.name.toLowerCase() === value)?.name
+                                :
+                                "Select Teacher"
+                            }
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                     </PopoverTrigger>
@@ -96,9 +104,7 @@ export function TeacherSelect() {
                                             onSelect={(currentValue) => {
                                                 setValue((currentValue === value ? "" : currentValue).toLowerCase());
                                                 setOpen(false);
-                                                if (setCurrentId) {
-                                                    setCurrentId(teacher.id);
-                                                }
+                                                setId(teacher.id)
                                             }}
                                         >
                                             <Check

@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/popover"
 import {useContext, useEffect} from "react";
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
+import {useQuery} from "convex/react";
+import {api} from "@/convex/_generated/api";
+import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram-provider";
 
 const selectType = [
     {
@@ -24,7 +27,7 @@ const selectType = [
         label: "Teacher",
     },
     {
-        value: "group",
+        value: "class",
         label: "Group",
     }
 ]
@@ -36,19 +39,36 @@ interface TypeProps{
 export function TypeSelect({
    setType
 }: TypeProps) {
+    const { user, webApp } = useTelegram();
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState("group")
+    const [value, setValue] = React.useState("class")
 
     const setCurrentType = useContext(ScheduleContext)?.setCurrentType;
 
+    const promise = useQuery(api.settings.getUserSettings, {userId: user?.id.toString() || ""});
+
+    useEffect(() => {
+       /* if (setCurrentType) {
+            if(promise){
+                setValue(promise.type)
+            }
+            setCurrentType(value);
+        }*/
+    }, []);
+
     useEffect(() => {
         if (setCurrentType) {
-            setCurrentType(value === "group" ? "class" : "teacher");
+            if(promise){
+                setValue(promise.type)
+            }
+            setCurrentType(value);
+            setType(promise && promise.type || value)
         }
-    }, []);
+    }, [promise]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
+            {value}
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"

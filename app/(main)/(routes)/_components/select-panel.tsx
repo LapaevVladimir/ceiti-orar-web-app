@@ -6,7 +6,7 @@ import {GroupSelect} from "@/app/(main)/(routes)/_components/group-select";
 import {TeacherSelect} from "@/app/(main)/(routes)/_components/teacher-select";
 
 export const SelectPanel = () => {
-    const [currentType, setCurrentType] = useState("group");
+    const [currentType, setCurrentType] = useState("class");
 
     return (
         <div className="max-sm:flex-col max-lg:w-full max-lg:items-center
@@ -15,7 +15,7 @@ export const SelectPanel = () => {
                 <TypeSelect setType={setCurrentType}/>
             </div>
             <div className="sm:pl-4 md:pl-8">
-                {currentType === "group" ? (
+                {currentType === "class" ? (
                     <GroupSelect/>
                 ): (
                     <TeacherSelect/>
