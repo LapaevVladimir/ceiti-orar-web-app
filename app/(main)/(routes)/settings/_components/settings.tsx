@@ -10,6 +10,7 @@ import {useTelegram} from "@/app/(main)/(routes)/_components/_providers/telegram
 import {ScheduleContext} from "@/app/(main)/(routes)/_components/_providers/schedule-provider";
 import {toast} from "sonner";
 import {useTheme} from "next-themes";
+import {Info} from "@/app/(main)/(routes)/_components/info";
 
 const Settings = () => {
     const { user, webApp } = useTelegram();
@@ -60,6 +61,7 @@ const Settings = () => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center">
+            <Info/>
             <h1 className="mb-8 mt-4 text-2xl">Settings</h1>
             <SelectPanel/>
             <div className="mt-4 flex">
