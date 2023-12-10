@@ -68,7 +68,7 @@ const Settings = () => {
                 <ReturnOrar/>
                 <ModeToggle/>
             </div>
-            <Button onClick={onSubmit} className="mt-4" variant="outline">Submit</Button>
+            <Button onClick={onSubmit} className="mt-4" variant="outline">Save</Button>
         </div>
     );
 };

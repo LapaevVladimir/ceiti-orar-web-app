@@ -1,6 +1,6 @@
 "use client";
 import {Button} from "@/components/ui/button";
-import {Settings} from "lucide-react";
+import {Save} from "lucide-react";
 import Link from "next/link";
 
 export const ScheduleSettings = () => {
@@ -17,7 +17,7 @@ export const ScheduleSettings = () => {
                 variant="outline"
             >
                 <Link href="/settings">
-                    <Settings/>
+                    <Save/>
                 </Link>
             </Button>
         </div>
